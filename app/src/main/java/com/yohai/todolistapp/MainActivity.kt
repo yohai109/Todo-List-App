@@ -27,11 +27,11 @@ class MainActivity : ComponentActivity() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             db.taskDao().insert(
-                Task("1"),
-                Task("2"),
-                Task("3"),
-                Task("4"),
-                Task("5"),
+                Task(title = "1"),
+                Task(title = "2"),
+                Task(title = "3"),
+                Task(title = "4"),
+                Task(title = "5"),
             )
         }
 
@@ -42,17 +42,13 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TaskList(db.taskDao()::getAll)
+                    TaskList(db.taskDao()::getAll) {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            db.taskDao().insert(it)
+                        }
+                    }
                 }
             }
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    TodoListAppTheme {
-//        TaskList()
-//    }
-//}

@@ -2,13 +2,14 @@ package com.yohai.todolistapp.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.yohai.todolistapp.models.Task
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TasksDao {
-    @Insert
+    @Insert(onConflict = REPLACE)
     fun insert(tasks: Task)
 
     @Insert

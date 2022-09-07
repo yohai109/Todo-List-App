@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun TaskList(
-    getAll: () -> Flow<List<Task>>
+    getAll: () -> Flow<List<Task>>, onCompleteChange: (Task) -> Unit
 ) {
     val tasks: List<Task> by getAll().collectAsState(emptyList())
 
@@ -22,7 +22,7 @@ fun TaskList(
         items(
             items = tasks,
             itemContent = {
-                TaskListItem(item = it)
+                TaskListItem(item = it, onCompleteChange = onCompleteChange)
             }
         )
     }
