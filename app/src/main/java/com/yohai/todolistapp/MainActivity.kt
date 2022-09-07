@@ -6,14 +6,35 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
+import com.yohai.todolistapp.datasource.TodoListDB
+import com.yohai.todolistapp.models.Task
 import com.yohai.todolistapp.ui.theme.TodoListAppTheme
+import dagger.android.AndroidInjection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var db: TodoListDB
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            db.taskDao().insert(
+                Task("1"),
+                Task("2"),
+                Task("3"),
+                Task("4"),
+                Task("5"),
+            )
+        }
+
         setContent {
             TodoListAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -21,17 +42,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TaskList()
+                    TaskList(db.taskDao()::getAll)
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TodoListAppTheme {
-        TaskList()
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    TodoListAppTheme {
+//        TaskList()
+//    }
+//}

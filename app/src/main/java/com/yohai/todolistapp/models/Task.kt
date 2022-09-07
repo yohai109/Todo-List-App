@@ -1,8 +1,9 @@
 package com.yohai.todolistapp.models
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity
 data class Task(
-    val title: String
+    @PrimaryKey val title: String
 )
