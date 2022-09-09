@@ -3,8 +3,11 @@ package com.yohai.todolistapp.bl
 import androidx.lifecycle.ViewModel
 import com.yohai.todolistapp.datasource.TodoListDB
 import com.yohai.todolistapp.models.Task
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val db: TodoListDB,
 ) : ViewModel() {
 
