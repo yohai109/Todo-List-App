@@ -8,5 +8,6 @@ import java.util.*
 data class Task(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val title: String,
-    val isCompleted: Boolean = false
+    val isCompleted: Boolean = false,
+    val order: Int
 )

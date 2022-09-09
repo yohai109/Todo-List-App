@@ -10,11 +10,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TasksDao {
     @Insert(onConflict = REPLACE)
-    fun insert(tasks: Task)
-
-    @Insert
     fun insert(vararg tasks: Task)
 
-    @Query("SELECT * FROM Task")
+    @Query("SELECT * FROM Task ORDER BY `order`")
     fun getAll(): Flow<List<Task>>
+
+    @Query("SELECT COUNT(*) FROM Task")
+    fun size(): Int
 }

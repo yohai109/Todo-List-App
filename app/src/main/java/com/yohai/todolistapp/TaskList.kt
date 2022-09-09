@@ -23,7 +23,7 @@ fun TaskList(
             items = tasks,
             itemContent = {
                 TaskListItem(item = it, onCompleteChange = onCompleteChange)
-            }
+            },
         )
     }
 }

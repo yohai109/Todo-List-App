@@ -3,6 +3,7 @@ package com.yohai.todolistapp.globaldi
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.yohai.todolistapp.bl.ViewModelFactory
 import com.yohai.todolistapp.datasource.TodoListDB
 import dagger.Module
 import dagger.Provides
@@ -26,6 +27,4 @@ class AppModule {
             TodoListDB::class.java, "main-database"
         ).build()
     }
-
-
 }

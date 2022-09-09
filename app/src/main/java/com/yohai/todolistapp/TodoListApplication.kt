@@ -1,6 +1,7 @@
 package com.yohai.todolistapp
 
 import android.app.Application
+import com.yohai.todolistapp.datasource.TodoListDB
 import com.yohai.todolistapp.globaldi.DaggerApplicationComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
