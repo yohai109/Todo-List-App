@@ -18,7 +18,8 @@ object LocalModule {
     @Provides
     fun provideDB(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
-        TodoListDB::class.java, "main-database"
+        TodoListDB::class.java,
+        "main-database"
     ).build()
 
 }

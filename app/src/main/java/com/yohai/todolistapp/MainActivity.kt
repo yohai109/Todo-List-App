@@ -1,10 +1,12 @@
 package com.yohai.todolistapp
 
-//import dagger.android.AndroidInjection
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,15 +26,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TodoListAppTheme {
-                val viewModel = hiltViewModel<MainViewModel>()
+                val viewModel: MainViewModel by viewModels()
                 lifecycleScope.launch(Dispatchers.IO) {
                     if (viewModel.size() == 0) {
                         viewModel.insertTasks(
-                            Task(title = "1", order = 1),
-                            Task(title = "2", order = 2),
-                            Task(title = "3", order = 3),
-                            Task(title = "4", order = 4),
-                            Task(title = "5", order = 5),
+                            Task(title = "1", body = "this is the body", order = 1),
+                            Task(title = "2", body = "this is the body", order = 2),
+                            Task(title = "3", body = "this is the body", order = 3),
+                            Task(title = "4", body = "this is the body", order = 4),
+                            Task(title = "5", body = "this is the body", order = 5),
                         )
                     }
                 }
@@ -51,6 +53,7 @@ class MainActivity : ComponentActivity() {
                                     viewModel.insertTasks(
                                         Task(
                                             title = "click",
+                                            body = "this is the body",
                                             order = viewModel.size() + 1
                                         )
                                     )
@@ -64,7 +67,11 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ) {
-                    TaskList() {
+                    TaskList(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(it)
+                    ) {
                         lifecycleScope.launch(Dispatchers.IO) {
                             viewModel.insertTasks(it)
                         }

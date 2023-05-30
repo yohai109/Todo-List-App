@@ -1,21 +1,24 @@
 package com.yohai.todolistapp
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Checkbox
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.yohai.todolistapp.models.Task
 
 @Preview
 @Composable
 fun TaskListItem(
-    item: Task = Task(title = "click", order = 1),
+    item: Task = Task(title = "click", body = "this is the body", order = 1),
     onCompleteChange: (Task) -> Unit = {}
 ) {
-    ConstraintLayout {
+    ConstraintLayout(
+        modifier = Modifier.fillMaxWidth()
+    ) {
         val (title, subTitle, checkbox) = createRefs()
 
         Text(
@@ -23,15 +26,15 @@ fun TaskListItem(
             modifier = Modifier.constrainAs(title) {
                 top.linkTo(parent.top)
             },
-            fontSize = 16.sp
+            style = MaterialTheme.typography.h2
         )
-
-        Text(
-            text = item.id,
-            modifier = Modifier.constrainAs(subTitle) { top.linkTo(title.bottom) },
-            fontSize = 12.sp
-        )
-
+        if (item.body.isNotBlank()) {
+            Text(
+                text = item.body,
+                modifier = Modifier.constrainAs(subTitle) { top.linkTo(title.bottom) },
+                style = MaterialTheme.typography.body1
+            )
+        }
         Checkbox(
             checked = item.isCompleted,
             modifier = Modifier.constrainAs(checkbox) {
@@ -39,7 +42,9 @@ fun TaskListItem(
                 bottom.linkTo(subTitle.bottom)
                 end.linkTo(parent.end)
             },
-            onCheckedChange = { onCompleteChange(item.copy(isCompleted = it)) }
+            onCheckedChange = {
+                onCompleteChange(item.copy(isCompleted = it))
+            }
         )
     }
 

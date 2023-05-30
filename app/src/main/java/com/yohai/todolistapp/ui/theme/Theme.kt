@@ -52,6 +52,7 @@ fun TodoListAppTheme(
 
     MaterialTheme(
         colors = colorScheme,
-        content = content
+        content = content,
+        typography = Typography
     )
 }
